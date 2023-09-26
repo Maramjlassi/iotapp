@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">My Application</string>
-    <string name="login">login</string>
-    <string name="register">register</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
     <string name="email">email</string>
     <string name="password">password</string>
+    <string name="Logout">Logout</string>
 </resources>
