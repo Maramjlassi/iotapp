@@ -23,7 +23,7 @@ import static android.content.ContentValues.TAG;
 
 public class Register extends AppCompatActivity {
 
-    TextInputEditText editTextEmail , editTextPassword;
+    TextInputEditText editTextName, editTextEmail , editTextPassword;
     Button buttonReg;
     FirebaseAuth auth;
     ProgressBar progressBar;
@@ -47,14 +47,15 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         auth=FirebaseAuth.getInstance();
-        editTextEmail = findViewById(R.id.email);
-        editTextPassword = findViewById(R.id.password);
+        editTextName = findViewById(R.id.editText_register_full_name);
+        editTextEmail = findViewById(R.id.editText_register_email);
+        editTextPassword = findViewById(R.id.editText_register_password);
         buttonReg = findViewById(R.id.btn_register);
         progressBar =findViewById(R.id.progressBar);
         textview=findViewById(R.id.loginNow);
 
         textview.setOnClickListener(new View.OnClickListener() {
-          @Override
+            @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),Login.class);
                 startActivity(intent);
@@ -97,7 +98,7 @@ public class Register extends AppCompatActivity {
                                     Toast.makeText(Register.this, "failed to create.",
                                             Toast.LENGTH_SHORT).show();
                                     //Toast.makeText(Register.this, "Registration failed: " + task.getException().getMessage(),
-                                      //      Toast.LENGTH_SHORT).show();
+                                    //      Toast.LENGTH_SHORT).show();
 
                                 }
                             }
