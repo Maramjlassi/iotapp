@@ -23,7 +23,7 @@ import static android.content.ContentValues.TAG;
 
 public class Register extends AppCompatActivity {
 
-    TextInputEditText editTextName, editTextEmail , editTextPassword;
+    TextInputEditText editTextName, editTextEmail , editTextMobile , editTextDob , editTextPassword , editTextConfirmPassword;
     Button buttonReg;
     FirebaseAuth auth;
     ProgressBar progressBar;
@@ -49,7 +49,10 @@ public class Register extends AppCompatActivity {
         auth=FirebaseAuth.getInstance();
         editTextName = findViewById(R.id.editText_register_full_name);
         editTextEmail = findViewById(R.id.editText_register_email);
+        editTextMobile = findViewById(R.id.editText_register_mobile);
+        editTextDob = findViewById(R.id.editText_register_dob);
         editTextPassword = findViewById(R.id.editText_register_password);
+        editTextConfirmPassword = findViewById(R.id.editText_confirm_password);
         buttonReg = findViewById(R.id.btn_register);
         progressBar =findViewById(R.id.progressBar);
         textview=findViewById(R.id.loginNow);
