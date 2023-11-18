@@ -19,11 +19,18 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.OnFailureListener;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import static android.content.ContentValues.TAG;
 
 public class Register extends AppCompatActivity {
 
-    TextInputEditText editTextName, editTextEmail , editTextMobile , editTextDob , editTextPassword , editTextConfirmPassword;
+    TextInputEditText editTextName, editTextEmail, editTextMobile, editTextDob, editTextPassword, editTextConfirmPassword;
     Button buttonReg;
     FirebaseAuth auth;
     ProgressBar progressBar;
@@ -34,11 +41,10 @@ public class Register extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = auth.getCurrentUser();
-        if(currentUser != null){
-            Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+        if (currentUser != null) {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             finish();
-
         }
     }
 
@@ -46,7 +52,7 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        auth=FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
         editTextName = findViewById(R.id.editText_register_full_name);
         editTextEmail = findViewById(R.id.editText_register_email);
         editTextMobile = findViewById(R.id.editText_register_mobile);
@@ -54,13 +60,13 @@ public class Register extends AppCompatActivity {
         editTextPassword = findViewById(R.id.editText_register_password);
         editTextConfirmPassword = findViewById(R.id.editText_confirm_password);
         buttonReg = findViewById(R.id.btn_register);
-        progressBar =findViewById(R.id.progressBar);
-        textview=findViewById(R.id.loginNow);
+        progressBar = findViewById(R.id.progressBar);
+        textview = findViewById(R.id.loginNow);
 
         textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),Login.class);
+                Intent intent = new Intent(getApplicationContext(), Login.class);
                 startActivity(intent);
                 finish();
             }
@@ -70,16 +76,20 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
-                String email,password;
-                email=String.valueOf(editTextEmail.getText());
-                password=String.valueOf(editTextPassword.getText());
-                if (TextUtils.isEmpty(email)){
-                    Toast.makeText(Register.this,"Enter email",Toast.LENGTH_SHORT).show();
+                String name, email, mobile, dob, password;
+                name = String.valueOf(editTextName.getText());
+                email = String.valueOf(editTextEmail.getText());
+                mobile = String.valueOf(editTextMobile.getText());
+                dob = String.valueOf(editTextDob.getText());
+                password = String.valueOf(editTextPassword.getText());
+                if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email) || TextUtils.isEmpty(mobile) || TextUtils.isEmpty(dob) || TextUtils.isEmpty(password)) {
+                    Toast.makeText(Register.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.GONE);
                     return;
                 }
 
-                if (TextUtils.isEmpty(password)){
-                    Toast.makeText(Register.this,"Enter password",Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(password)) {
+                    Toast.makeText(Register.this, "Enter password", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -89,9 +99,13 @@ public class Register extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 progressBar.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
+                                    FirebaseUser currentUser = auth.getCurrentUser();
+
+                                    saveUserInfoInFirestore(currentUser.getUid(), name, email, mobile, dob);
+
                                     Toast.makeText(Register.this, "Account Created.",
                                             Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(getApplicationContext(),Login.class);
+                                    Intent intent = new Intent(getApplicationContext(), Login.class);
                                     startActivity(intent);
                                     finish();
 
@@ -109,4 +123,36 @@ public class Register extends AppCompatActivity {
             }
         });
     }
+
+    private void saveUserInfoInFirestore(String userId, String name, String email, String mobile, String dob) {
+        // Access the Firestore instance
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // Create a new user object with the desired fields
+        Map<String, Object> user = new HashMap<>();
+        user.put("name", name);
+        user.put("email", email);
+        user.put("mobile", mobile);
+        user.put("dob", dob);
+
+        // Add a new document with a generated ID
+        db.collection("users")
+                .document(userId)
+                .set(user)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "User information saved successfully to Firestore");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error adding user information to Firestore", e);
+                    }
+                });
+    }
+
+
+
 }
