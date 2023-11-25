@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -51,6 +52,7 @@ public class Login extends AppCompatActivity {
         progressBar =findViewById(R.id.progressBar);
         textview=findViewById(R.id.registerNow);
 
+
         textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,7 +86,7 @@ public class Login extends AppCompatActivity {
                                 progressBar.setVisibility(View.GONE);
                                 if (task.isSuccessful()) {
                                     Toast.makeText(getApplicationContext(),"Login Successful",Toast.LENGTH_SHORT).show();
-                                    Intent intent=new Intent(getApplicationContext(),Change.class);
+                                    Intent intent=new Intent(getApplicationContext(),Getuser.class);
                                     startActivity(intent);
                                     finish();
 

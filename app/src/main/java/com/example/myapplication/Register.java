@@ -30,7 +30,7 @@ import static android.content.ContentValues.TAG;
 
 public class Register extends AppCompatActivity {
 
-    TextInputEditText editTextName, editTextEmail, editTextMobile, editTextDob, editTextPassword, editTextConfirmPassword;
+    TextInputEditText editTextName, editTextEmail, editTextMobile, editTextDob, editTextPassword, editTextConfirmPassword, editworkplace;
     Button buttonReg;
     FirebaseAuth auth;
     ProgressBar progressBar;
@@ -59,6 +59,7 @@ public class Register extends AppCompatActivity {
         editTextDob = findViewById(R.id.editText_register_dob);
         editTextPassword = findViewById(R.id.editText_register_password);
         editTextConfirmPassword = findViewById(R.id.editText_confirm_password);
+        editworkplace = findViewById(R.id.workplace);
         buttonReg = findViewById(R.id.btn_register);
         progressBar = findViewById(R.id.progressBar);
         textview = findViewById(R.id.loginNow);
@@ -76,11 +77,12 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
-                String name, email, mobile, dob, password;
+                String name, email, mobile, dob, password, work;
                 name = String.valueOf(editTextName.getText());
                 email = String.valueOf(editTextEmail.getText());
                 mobile = String.valueOf(editTextMobile.getText());
                 dob = String.valueOf(editTextDob.getText());
+                work = String.valueOf(editworkplace.getText());
                 password = String.valueOf(editTextPassword.getText());
                 if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email) || TextUtils.isEmpty(mobile) || TextUtils.isEmpty(dob) || TextUtils.isEmpty(password)) {
                     Toast.makeText(Register.this, "Please fill all the fields", Toast.LENGTH_SHORT).show();
@@ -101,7 +103,7 @@ public class Register extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     FirebaseUser currentUser = auth.getCurrentUser();
 
-                                    saveUserInfoInFirestore(currentUser.getUid(), name, email, mobile, dob);
+                                    saveUserInfoInFirestore(currentUser.getUid(), name, email, mobile, dob, work);
 
                                     Toast.makeText(Register.this, "Account Created.",
                                             Toast.LENGTH_SHORT).show();
@@ -124,7 +126,7 @@ public class Register extends AppCompatActivity {
         });
     }
 
-    private void saveUserInfoInFirestore(String userId, String name, String email, String mobile, String dob) {
+    private void saveUserInfoInFirestore(String userId, String name, String email, String mobile, String dob, String work) {
         // Access the Firestore instance
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -134,6 +136,7 @@ public class Register extends AppCompatActivity {
         user.put("email", email);
         user.put("mobile", mobile);
         user.put("dob", dob);
+        user.put("work", work);
 
         // Add a new document with a generated ID
         db.collection("users")
