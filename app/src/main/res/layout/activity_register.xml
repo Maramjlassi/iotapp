@@ -8,14 +8,13 @@
     android:layout_gravity="center"
     android:padding="16dp"
     tools:context=".Register">
-
 <TextView
 android:text="@string/register"
 android:textSize="20sp"
 android:textStyle="bold"
 android:gravity="center"
 android:layout_marginBottom="15dp"
-android:textColor="#4E4F51"
+android:textColor="#FF3131"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" />
 
