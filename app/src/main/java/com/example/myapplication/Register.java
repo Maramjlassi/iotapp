@@ -36,8 +36,8 @@ public class Register extends AppCompatActivity {
     ProgressBar progressBar;
     TextView textview;
 
-    @Override
-    public void onStart() {
+    //@Override
+    /*public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = auth.getCurrentUser();
@@ -46,7 +46,7 @@ public class Register extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
