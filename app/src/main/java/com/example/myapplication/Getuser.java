@@ -6,7 +6,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
@@ -18,6 +20,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -33,7 +37,9 @@ public class Getuser extends AppCompatActivity {
     FirebaseFirestore db;
     DatabaseReference databaseReference;
     ListView listView;
+    Button RegisterButton;
     private String workPlace;
+    String userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +50,7 @@ public class Getuser extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         listView = findViewById(R.id.listView);
+        RegisterButton = findViewById(R.id.RegisterButton);
 
 
         FirebaseUser currentUser = auth.getCurrentUser();
@@ -57,6 +64,7 @@ public class Getuser extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 DocumentSnapshot document = task.getResult();
                                 if (document.exists()) {
+                                    userType = document.getString("name");
                                     workPlace = document.getString("work");
                                     if (workPlace != null) {
                                         displayKeysForWorkPlace(workPlace);
@@ -81,6 +89,21 @@ public class Getuser extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), LedStates.class);
                 startActivity(intent);
                 finish();
+            }
+        });
+
+        RegisterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Check if the user is an admin
+                if ("Admin".equals(userType)) {
+                    Intent intent = new Intent(getApplicationContext(), Register.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Only admin can perform this action", Toast.LENGTH_SHORT).show();
+                    // Handle the case where the user is not an admin
+                }
             }
         });
     }

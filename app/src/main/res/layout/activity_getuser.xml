@@ -11,20 +11,39 @@
     android:paddingBottom="16dp"
     android:background="#F1F1F1">
 
-    <Button
-        android:id="@+id/logoutButton"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:text="logout"
-        android:textSize="14sp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"
-        android:onClick="logout"
-        android:clickable="true"
-        android:backgroundTint="#4E4F51"
-        android:textColor="#FFFFFF"/>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="150dp"
+        android:id="@+id/btn">
+
+        <Button
+            android:id="@+id/RegisterButton"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Register"
+            android:textSize="14sp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:onClick="logout"
+            android:clickable="true"
+            android:backgroundTint="#4E4F51"
+            android:textColor="#ffffff"/>
+        <Button
+            android:id="@+id/logoutButton"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Logout"
+            android:textSize="14sp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
+            android:onClick="logout"
+            android:clickable="true"
+            android:backgroundTint="#4E4F51"
+            android:textColor="#ffffff"/>
+
+    </LinearLayout>
 
 
     <TextView
@@ -32,30 +51,45 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Les ronds-points les plus proches:"
-        android:textSize="15sp"
-
+        android:textSize="20dp"
         android:textColorHighlight="#4E4F51"
         android:textStyle="bold"
-        android:layout_below="@+id/logoutButton"
+        android:layout_below="@+id/btn"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="9dp"
-        android:textColor="#FF3131"/>
+        android:textColor="#7C8F00"
+        />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/ledStatesTextView"
         android:layout_marginTop="16dp"
-        app:cardCornerRadius="15dp">
+        app:cardCornerRadius="15dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardUseCompatPadding="true">
 
         <ListView
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColor="#4E4F51"
+            android:layout_gravity="center"
+            android:background="#ffffff"
             android:dividerHeight="1dp"
-            android:background="#FFFFFF"/>
+            android:textColor="#ffffff"/>
+
+        <ImageView
+            android:id="@+id/logoImageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/pngwing"
+            android:layout_marginTop="315dp"
+            android:layout_marginRight="3dp"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true" />
     </androidx.cardview.widget.CardView>
+
 
 
 

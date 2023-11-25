@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_gravity="center"
-    android:padding="16dp"
+    android:background="#F1F1F1"
+    android:padding="20dp"
     tools:context=".Register">
 <TextView
 android:text="@string/register"
@@ -29,8 +30,7 @@ android:id="@+id/editText_register_full_name"
 android:hint="Full Name"
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
-android:textColor="#000000"
-    android:backgroundTint="#000000" />
+android:textColor="#000000" android:backgroundTint="#000000" />
     </com.google.android.material.textfield.TextInputLayout>
 
 <com.google.android.material.textfield.TextInputLayout
@@ -180,7 +180,7 @@ android:layout_height="wrap_content"/>
         android:text="@string/register" />
     <TextView
 android:id="@+id/loginNow"
-android:text="click to login"
+android:text="Back"
 android:textColor="#FF3131"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" />

@@ -28,13 +28,13 @@ public class Login extends AppCompatActivity {
     ProgressBar progressBar;
     TextView textview;
 
-    @Override
+    //@Override
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = auth.getCurrentUser();
         if(currentUser != null){
-            Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+            Intent intent=new Intent(getApplicationContext(),Getuser.class);
             startActivity(intent);
             finish();
 
@@ -50,17 +50,17 @@ public class Login extends AppCompatActivity {
         editTextPassword = findViewById(R.id.password);
         buttonLogin = findViewById(R.id.btn_login);
         progressBar =findViewById(R.id.progressBar);
-        textview=findViewById(R.id.registerNow);
+        //textview=findViewById(R.id.registerNow);
 
 
-        textview.setOnClickListener(new View.OnClickListener() {
+        /*textview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(),Register.class);
                 startActivity(intent);
                 finish();
             }
-        });
+        });*/
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
