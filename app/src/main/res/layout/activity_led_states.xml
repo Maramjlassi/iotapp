@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+    android:background="@drawable/rp">
+
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:text="logout"
+        android:textSize="14sp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:onClick="logout"
+        android:clickable="true"
+        android:backgroundTint="#4E4F51"
+        android:textColor="#FFFFFF"/>
+
+    <TextView
+        android:id="@+id/row1"
+        android:layout_width="match_parent"
+        android:layout_height="105dp"
+        android:text="Le statut actuel du rond-point"
+        android:layout_below="@+id/logoutButton"
+        android:gravity="center"
+        android:textColor="#494444"
+        android:textSize="35dp"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:id="@+id/row2"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginTop="60dp"
+        android:orientation="vertical"
+        android:gravity="center"
+
+        android:layout_below="@id/row1">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/pair1"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/red1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/circle_background"
+                android:layout_marginRight="10dp"/>
+
+            <View
+                android:id="@+id/green1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/circle_backgroung2" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <Button
+            android:id="@+id/change1"
+            android:text="Switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#4E4F51"
+            android:layout_gravity="center"
+            android:layout_below="@id/pair1"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/row3"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_below="@id/row2"
+        android:layout_marginTop="28dp"
+        >
+
+        <!-- Pair2 and Change2 -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_marginRight="220dp">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/pair2"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/red2"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/circle_background"
+                    android:layout_marginRight="10dp"/>
+
+                <View
+                    android:id="@+id/green2"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/circle_backgroung2" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <Button
+                android:id="@+id/change2"
+                android:text="Switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#4E4F51"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+        <!-- Pair3 and Change3 -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/pair3"
+                android:orientation="horizontal">
+
+                <View
+                    android:id="@+id/red3"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/circle_background"
+                    android:layout_marginRight="10dp"/>
+
+                <View
+                    android:id="@+id/green3"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/circle_backgroung2" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <Button
+                android:id="@+id/change3"
+                android:text="Switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="#4E4F51"
+                android:layout_gravity="center"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/row4"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="40dp"
+        android:layout_below="@id/row3">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/pair4"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/red4"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/circle_background"
+                android:layout_marginRight="10dp"/>
+
+            <View
+                android:id="@+id/green4"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/circle_backgroung2" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <Button
+            android:id="@+id/change4"
+            android:text="Switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#4E4F51"
+            android:layout_gravity="center"
+            android:layout_below="@id/pair4"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

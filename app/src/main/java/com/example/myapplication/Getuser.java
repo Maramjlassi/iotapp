@@ -1,86 +1,121 @@
 package com.example.myapplication;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
-import android.os.Bundle;
-import android.os.Bundle;
-        import android.util.Log;
-        import android.view.View;
-        import android.widget.Button;
-        import android.widget.TextView;
-        import androidx.annotation.NonNull;
-        import androidx.appcompat.app.AppCompatActivity;
-        import com.google.android.gms.tasks.OnCompleteListener;
-        import com.google.android.gms.tasks.Task;
-        import com.google.firebase.auth.FirebaseAuth;
-        import com.google.firebase.auth.FirebaseUser;
-        import com.google.firebase.firestore.DocumentReference;
-        import com.google.firebase.firestore.DocumentSnapshot;
-        import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-import com.google.firebase.firestore.ListenerRegistration;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class Getuser extends AppCompatActivity {
 
-    private TextView nameTextView, dobTextView, workplaceTextView;
-    private Button displayInfoButton;
+    private static final String TAG = "Getuser";
 
-    private FirebaseAuth mAuth;
-    private FirebaseFirestore db;
-    private ListenerRegistration userListener;
+    FirebaseAuth auth;
+    FirebaseFirestore db;
+    DatabaseReference databaseReference;
+    ListView listView;
+    private String workPlace;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_getuser);
 
-        mAuth = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        listView = findViewById(R.id.listView);
 
-        nameTextView = findViewById(R.id.nameTextView);
-        dobTextView = findViewById(R.id.dobTextView);
-        workplaceTextView = findViewById(R.id.workplaceTextView);
-        displayInfoButton = findViewById(R.id.displayInfoButton);
 
-        displayInfoButton.setOnClickListener(new View.OnClickListener() {
+        FirebaseUser currentUser = auth.getCurrentUser();
+        if (currentUser != null) {
+            db.collection("users")
+                    .document(currentUser.getUid())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                DocumentSnapshot document = task.getResult();
+                                if (document.exists()) {
+                                    workPlace = document.getString("work");
+                                    if (workPlace != null) {
+                                        displayKeysForWorkPlace(workPlace);
+                                    }
+                                } else {
+                                    Log.d(TAG, "No such document");
+                                }
+                            } else {
+                                Log.w(TAG, "get failed with ", task.getException());
+                            }
+                        }
+                    });
+        }
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                displayUserInfo();
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Handle the click event for the item at position
+                // 'position' is the position of the clicked item in the adapter
+
+                // Your code for item click event goes here
+                Intent intent = new Intent(getApplicationContext(), LedStates.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
 
-    private void displayUserInfo() {
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            userListener = db.collection("users")
-                    .document(currentUser.getUid())
-                    .addSnapshotListener(this, (documentSnapshot, e) -> {
-                        if (e != null) {
-                            // Handle errors
-                            return;
+    private void displayKeysForWorkPlace(String workPlace) {
+        // Your existing code for displaying keys
+        db.collection("Feu")
+                .document(workPlace)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                Map<String, Object> data = document.getData();
+                                if (data != null) {
+                                    List<String> keys = new ArrayList<>(data.keySet());
+                                    ArrayAdapter<String> adapter = new ArrayAdapter<>(Getuser.this, android.R.layout.simple_list_item_1, keys);
+                                    listView.setAdapter(adapter);
+                                }
+                            } else {
+                                Log.d(TAG, "No such document");
+                            }
+                        } else {
+                            Log.w(TAG, "get failed with ", task.getException());
                         }
-
-                        if (documentSnapshot != null && documentSnapshot.exists()) {
-                            String name = documentSnapshot.getString("name");
-                            String dob = documentSnapshot.getString("dob");
-                            String workplace = documentSnapshot.getString("mobile");
-
-                            nameTextView.setText("Name: " + name);
-                            dobTextView.setText("Date of Birth: " + dob);
-                            workplaceTextView.setText("Workplace: " + workplace);
-                        }
-                    });
-        }
+                    }
+                });
     }
 
-    @Override
-    protected void onDestroy() {
-        if (userListener != null) {
-            userListener.remove();
-        }
-        super.onDestroy();
+    public void logout(View view) {
+        auth.signOut();
+        Intent intent = new Intent(Getuser.this, Login.class);
+        startActivity(intent);
+        finish();
     }
 }
-
