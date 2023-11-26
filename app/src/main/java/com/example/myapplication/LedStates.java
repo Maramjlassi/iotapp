@@ -4,12 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -41,12 +43,15 @@ public class LedStates extends AppCompatActivity {
     private static final String TAG = "LedStates";
     private DatabaseReference databaseReference, databaseReference2, databaseReference3, databaseReference4;
     FirebaseAuth auth;
+    TextView back;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_led_states);
 
+        back = findViewById(R.id.Back);
         auth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("ledStates").child("pair1");
         View red1 = findViewById(R.id.red1);
@@ -69,6 +74,15 @@ public class LedStates extends AppCompatActivity {
         readLedStates2(red2, green2);
         readLedStates3(red3, green3);
         readLedStates4(red4, green4);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Getuser.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         change1.setOnClickListener(new View.OnClickListener() {
             @Override

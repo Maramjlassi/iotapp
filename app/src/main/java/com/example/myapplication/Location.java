@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -12,6 +13,7 @@ import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,39 +28,52 @@ import android.Manifest;
 public class Location extends AppCompatActivity {
 
     FusedLocationProviderClient fusedLocationProviderClient;
-    TextView country,city,address,longitude,latitude,logout;
-    Button getLocation;
+    TextView country,city,address,longitude,latitude,back, rp;
+    ImageView image;
+
     private final static int REQUEST_CODE=100;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location);
 
-        getLocation = findViewById(R.id.get_location_btn);
-
         city=findViewById(R.id.City);
         country=findViewById(R.id.Country);
         address=findViewById(R.id.Address);
         longitude=findViewById(R.id.Longitude);
-        latitude=findViewById(R.id.Lagitude);
-        logout =findViewById(R.id.Logout);
+        latitude=findViewById(R.id.Latitude);
+        back =findViewById(R.id.Back);
+        image = findViewById(R.id.logoImageView);
+        rp = findViewById(R.id.rp);
 
         fusedLocationProviderClient= LocationServices.getFusedLocationProviderClient(this);
 
-        logout.setOnClickListener(new View.OnClickListener() {
+        getLastLocation();
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), Login.class);
+                Intent intent = new Intent(getApplicationContext(), Getuser.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), LedStates.class);
                 startActivity(intent);
                 finish();
             }
         });
 
-        getLocation.setOnClickListener(new View.OnClickListener() {
+        rp.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                getLastLocation();
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), LedStates.class);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -66,34 +81,38 @@ public class Location extends AppCompatActivity {
     }
 
     private void getLastLocation() {
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             fusedLocationProviderClient.getLastLocation().addOnSuccessListener(new OnSuccessListener<android.location.Location>() {
                 @Override
                 public void onSuccess(android.location.Location location) {
-                    if (location!=null){
-                        Geocoder geocoder=new Geocoder( Location.this, Locale.getDefault());
-                        List<Address> addresses= null;
+                    if (location != null) {
+                        Geocoder geocoder = new Geocoder(Location.this, Locale.getDefault());
+                        List<Address> addresses = null;
                         try {
                             addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                            latitude.setText("Lagitude: "+ addresses.get(0).getLatitude());
-                            longitude.setText("Longitude: "+ addresses.get(0).getLatitude());
-                            address.setText("Address: "+ addresses.get(0).getAddressLine(0));
-                            city.setText("City: "+ addresses.get(0).getLocality());
-                            country.setText("Country: "+ addresses.get(0).getCountryName());
+                            if (addresses != null && addresses.size() > 0) {
+                                latitude.setText("Latitude: " + addresses.get(0).getLatitude());
+                                longitude.setText("Longitude: " + addresses.get(0).getLongitude());
+                                address.setText("Address: " + addresses.get(0).getAddressLine(0));
+                                city.setText("City: " + addresses.get(0).getLocality());
+                                country.setText("Country: " + addresses.get(0).getCountryName());
+                            } else {
+                                // Handle the case where no address is found
+                                Toast.makeText(Location.this, "No address found", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            // Handle the exception
+                            Toast.makeText(Location.this, "Error fetching address", Toast.LENGTH_SHORT).show();
                         }
-                        catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-
                     }
-
                 }
             });
-        }else {
+        } else {
             askPermission();
-
         }
     }
+
 
     private void askPermission() {
         ActivityCompat.requestPermissions(Location.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);

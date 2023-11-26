@@ -8,6 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -40,6 +41,7 @@ public class Getuser extends AppCompatActivity {
     Button RegisterButton;
     private String workPlace;
     String userType;
+    TextView welcome, location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,8 @@ public class Getuser extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference();
         listView = findViewById(R.id.listView);
         RegisterButton = findViewById(R.id.RegisterButton);
+        welcome = findViewById(R.id.welcomeTextView);
+        location = findViewById(R.id.location);
 
 
         FirebaseUser currentUser = auth.getCurrentUser();
@@ -69,6 +73,7 @@ public class Getuser extends AppCompatActivity {
                                     if (workPlace != null) {
                                         displayKeysForWorkPlace(workPlace);
                                     }
+                                    welcome.setText(userType + " Vous etes à: " +workPlace);
                                 } else {
                                     Log.d(TAG, "No such document");
                                 }
@@ -104,6 +109,15 @@ public class Getuser extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Only admin can perform this action", Toast.LENGTH_SHORT).show();
                     // Handle the case where the user is not an admin
                 }
+            }
+        });
+
+        location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),Location.class);
+                startActivity(intent);
+                finish();
             }
         });
     }

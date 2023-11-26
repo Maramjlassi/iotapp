@@ -44,6 +44,28 @@
             android:textColor="#ffffff"/>
 
     </LinearLayout>
+    <TextView
+        android:id="@+id/welcomeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome"
+        android:textSize="16sp"
+        android:textColor="#FF3131"
+        android:textStyle="italic"
+        android:layout_below="@+id/btn"
+        android:layout_marginTop="16dp"/>
+    <TextView
+        android:id="@+id/location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vous avez changer de Localisation? cliquez içi"
+        android:textSize="14sp"
+        android:textStyle="italic"
+        android:layout_marginTop="5dp"
+        android:textColor="#3A3838"
+        android:clickable="true"
+        android:layout_below="@+id/welcomeTextView"
+       />
 
 
     <TextView
@@ -54,9 +76,9 @@
         android:textSize="20dp"
         android:textColorHighlight="#4E4F51"
         android:textStyle="bold"
-        android:layout_below="@+id/btn"
-        android:layout_marginTop="16dp"
-        android:layout_marginLeft="9dp"
+        android:layout_below="@+id/location"
+        android:layout_marginTop="15dp"
+
         android:textColor="#7C8F00"
         />
 
@@ -89,8 +111,5 @@
         android:scaleType="centerCrop"
         android:adjustViewBounds="true" />
     </androidx.cardview.widget.CardView>
-
-
-
 
 </RelativeLayout>
