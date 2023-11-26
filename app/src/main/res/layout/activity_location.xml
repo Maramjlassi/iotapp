@@ -8,119 +8,126 @@
     android:background="#F1F1F1"
     android:padding="8dp"
     tools:context=".Location">
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:cardBackgroundColor="#FFFFFF"
         app:cardCornerRadius="15dp"
         app:cardElevation="4dp"
-        app:cardBackgroundColor="#FFFFFF"
         app:cardUseCompatPadding="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-    <TextView
-        android:id="@+id/Location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Current Location"
-        android:gravity="center_horizontal"
-        android:textSize="25sp"
-        android:textColor="#FF3131"/>
 
-    <TextView
-        android:id="@+id/Address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Address:"
-        android:layout_below="@+id/Location"
-        android:layout_marginTop="20dp"
-        android:textSize="20sp"
-        android:textColor="#4E4F51"
-        android:textStyle="bold"
-        android:layout_marginStart="10dp"/>
+            <TextView
+                android:id="@+id/Location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:text="Current Location"
+                android:textColor="#FF3131"
+                android:textSize="25sp" />
 
-    <TextView
-        android:id="@+id/City"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="City:"
-            android:layout_below="@+id/Address"
-        android:layout_marginTop="20dp"
-        android:textSize="20sp"
-        android:textColor="#4E4F51"
-        android:textStyle="bold"
-        android:layout_marginStart="10dp"/>
+            <TextView
+                android:id="@+id/Address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Location"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:text="Address:"
+                android:textColor="#4E4F51"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/Country"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Country:"
-        android:layout_below="@+id/City"
-        android:layout_marginTop="20dp"
-        android:textSize="20sp"
-        android:textColor="#4E4F51"
-        android:textStyle="bold"
-        android:layout_marginStart="10dp"/>
+            <TextView
+                android:id="@+id/City"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Address"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:text="City:"
+                android:textColor="#4E4F51"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/Longitude"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Longitude:"
-        android:layout_below="@+id/Country"
-        android:layout_marginTop="20dp"
-        android:textSize="20sp"
-        android:textColor="#4E4F51"
-        android:textStyle="bold"
-        android:layout_marginStart="10dp"/>
+            <TextView
+                android:id="@+id/Country"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/City"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:text="Country:"
+                android:textColor="#4E4F51"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/Latitude"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Latitude:"
-        android:layout_below="@+id/Longitude"
-        android:layout_marginTop="20dp"
-        android:textSize="20sp"
-        android:textColor="#4E4F51"
-        android:textStyle="bold"
-        android:layout_marginStart="10dp"/>
+            <TextView
+                android:id="@+id/Longitude"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Country"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:text="Longitude:"
+                android:textColor="#4E4F51"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-    <ImageView
-        android:id="@+id/logoImageView"
-        android:layout_width="92dp"
-        android:layout_below="@+id/Latitude"
-        android:layout_height="112dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="120dp"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        android:src="@drawable/pngwingg" />
-    <TextView
-        android:id="@+id/rp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Plus proche Rond-Point"
-        android:layout_below="@+id/logoImageView"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:textSize="18sp"
-        android:textColor="#FF3131"
-        android:textStyle="bold"
-        android:layout_marginStart="10dp"/>
-    <TextView
-        android:id="@+id/Back"
-        android:text="Back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"/>
+            <TextView
+                android:id="@+id/Latitude"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Longitude"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:text="Latitude:"
+                android:textColor="#4E4F51"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/logoImageView"
+                android:layout_width="92dp"
+                android:layout_height="112dp"
+                android:layout_below="@+id/Latitude"
+                android:layout_marginLeft="120dp"
+                android:layout_marginTop="30dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/pngwingg" />
+
+            <TextView
+                android:id="@+id/rp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/logoImageView"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Nearest Crossroads"
+                android:textColor="#FF3131"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/Back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="Back" />
         </RelativeLayout>
 
     </androidx.cardview.widget.CardView>

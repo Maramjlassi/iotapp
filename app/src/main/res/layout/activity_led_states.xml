@@ -3,7 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-    android:background="@drawable/rpimg">
+    android:background="@drawable/street5">
 
     <Button
         android:id="@+id/logoutButton"
@@ -24,7 +24,7 @@ android:layout_height="match_parent"
         android:id="@+id/row1"
         android:layout_width="match_parent"
         android:layout_height="105dp"
-        android:text="Le statut actuel du rond-point"
+        android:text="Actual state of the Crossroads"
         android:layout_below="@+id/logoutButton"
         android:gravity="center"
         android:textColor="#494444"

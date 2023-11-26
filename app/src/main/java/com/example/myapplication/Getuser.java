@@ -73,7 +73,7 @@ public class Getuser extends AppCompatActivity {
                                     if (workPlace != null) {
                                         displayKeysForWorkPlace(workPlace);
                                     }
-                                    welcome.setText(userType + " Vous etes à: " +workPlace);
+                                    welcome.setText(userType + ", you are in: " +workPlace);
                                 } else {
                                     Log.d(TAG, "No such document");
                                 }
