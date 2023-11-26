@@ -4,12 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -41,12 +43,15 @@ public class LedStates extends AppCompatActivity {
     private static final String TAG = "LedStates";
     private DatabaseReference databaseReference, databaseReference2, databaseReference3, databaseReference4;
     FirebaseAuth auth;
+    TextView back;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_led_states);
 
+        back = findViewById(R.id.Back);
         auth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("ledStates").child("pair1");
         View red1 = findViewById(R.id.red1);
@@ -69,6 +74,15 @@ public class LedStates extends AppCompatActivity {
         readLedStates2(red2, green2);
         readLedStates3(red3, green3);
         readLedStates4(red4, green4);
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), Getuser.class);
+                startActivity(intent);
+                finish();
+            }
+        });
 
         change1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,8 +110,12 @@ public class LedStates extends AppCompatActivity {
                     }
                 });
                 fetchUserInfo();
+                toggleLed(3);
+                toggleLed(4);
+                toggleLed(2);
                 readLedStates(red1, green1);
             }
+
         });
         change2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,6 +143,9 @@ public class LedStates extends AppCompatActivity {
                     }
                 });
                 fetchUserInfo();
+                toggleLed(3);
+                toggleLed(4);
+                toggleLed(1);
                 readLedStates2(red2, green2);
             }
         });
@@ -154,6 +175,9 @@ public class LedStates extends AppCompatActivity {
                     }
                 });
                 fetchUserInfo();
+                toggleLed(2);
+                toggleLed(4);
+                toggleLed(1);
                 readLedStates3(red3, green3);
             }
         });
@@ -183,11 +207,37 @@ public class LedStates extends AppCompatActivity {
                     }
                 });
                 fetchUserInfo();
+                toggleLed(3);
+                toggleLed(2);
+                toggleLed(1);
                 readLedStates4(red4, green4);
             }
         });
 
     }
+    private void toggleLed(int pairNumber) {
+        try {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference pairRef = database.getReference("ledStates").child("pair" + pairNumber);
+
+            // Fetch the current values
+            pairRef.get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    // Toggle the values
+                    Boolean greenValue = (Boolean) task.getResult().child("green").getValue();
+                    Boolean redValue = (Boolean) task.getResult().child("red").getValue();
+
+                    if (greenValue != null && redValue != null) {
+                        pairRef.child("green").setValue(!greenValue);
+                        pairRef.child("red").setValue(!redValue);
+
+                    }
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error toggling values: " + e.getMessage());
+        }}
 
     private void readLedStates(View redView, View greenView) {
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -305,6 +355,7 @@ public class LedStates extends AppCompatActivity {
             }
         });
     }
+
 
     //Google sheet
     private void fetchUserInfo() {
